@@ -19,12 +19,13 @@ class CheckAdminMiddleware(BaseMiddleware):
         self,
         handler: Callable,
         event: Message,
-        data: Dict
+        data: Dict,
     ):
-        if not self._admin_users_ids:
-            return await handler(event, data)
-
-        if event.from_user.id not in self._admin_users_ids:
+        tg_user = await data["bot"].get_chat_member(
+            chat_id=data["event_context"].chat_id,
+            user_id=data["event_context"].user_id
+        )
+        if tg_user.status not in ("creator", "administrator"):
             await event.delete()
             return
 
