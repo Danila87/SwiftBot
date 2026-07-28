@@ -1,18 +1,18 @@
 import pandas as pd
 
-from gspread import service_account, Client
+from gspread import service_account, Client, service_account_from_dict
 from typing import Optional, Dict
-from config import SHEET_ID
+from config import SHEET_ID, GOOGLE_SHEET_JSON_DATA
 from pathlib import Path
 
 class GoogleSheetClient:
     def __init__(
         self,
-        json_path: str,
+        json_data: Dict,
         table_id: str
     ):
-        self._table_client: Client = service_account(
-            filename=json_path,
+        self._table_client: Client = service_account_from_dict(
+            json_data
         )
         self._table = self._table_client.open_by_key(table_id)
 
@@ -92,6 +92,6 @@ class GoogleSheetClient:
 
 
 swift_table_client = GoogleSheetClient(
-    json_path="swiftbot-500412-9c7cc1c291c5.json",
-    table_id="1jStirZh3ve0CtwyH6GCBpwfXwhlMTmyUBGzFBOikXHY"
+    json_data=GOOGLE_SHEET_JSON_DATA,
+    table_id=SHEET_ID
 )

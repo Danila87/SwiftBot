@@ -1,4 +1,5 @@
 import os
+import json
 
 from dotenv import load_dotenv
 from aiogram.types.chat_permissions import ChatPermissions
@@ -42,3 +43,5 @@ SHEET_ID = os.getenv('SHEET_ID')
 ADMIN_USERS = os.getenv('ADMIN_USERS')
 if ADMIN_USERS:
     ADMIN_USERS = map(int, ADMIN_USERS.replace(" ", "").split(','))
+
+GOOGLE_SHEET_JSON_DATA = json.loads(os.getenv('GOOGLE_SHEET_JSON_DATA'))
