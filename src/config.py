@@ -36,8 +36,8 @@ NOT_ACCESS_USER_PERMISSIONS  = ChatPermissions(
     can_send_voice_notes=False,
 )
 
-TG_GROUP_ID = os.getenv('TG_GROUP_ID')
-TG_TRADE_GROUP_ID = os.getenv('TG_TRADE_GROUP_ID')
+TG_GROUP_ID = int(os.getenv('TG_GROUP_ID'))
+TG_TRADE_GROUP_ID = int(os.getenv('TG_TRADE_GROUP_ID'))
 SHEET_ID = os.getenv('SHEET_ID')
 
 ADMIN_USERS = os.getenv('ADMIN_USERS')
@@ -45,3 +45,6 @@ if ADMIN_USERS:
     ADMIN_USERS = map(int, ADMIN_USERS.replace(" ", "").split(','))
 
 GOOGLE_SHEET_JSON_DATA = json.loads(os.getenv('GOOGLE_SHEET_JSON_DATA'))
+
+TG_API_ID = int(os.getenv('TG_API_ID'))
+TG_API_HASH = os.getenv('TG_API_HASH')
