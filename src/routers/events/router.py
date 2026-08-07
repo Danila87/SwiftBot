@@ -1,5 +1,4 @@
 import asyncio
-import time
 
 from aiogram import Router, Bot
 from aiogram.enums import ParseMode
@@ -8,7 +7,7 @@ from aiogram.types.chat_member_updated import ChatMemberUpdated
 from aiogram.types.callback_query import CallbackQuery
 from aiogram.filters import ChatMemberUpdatedFilter, IS_NOT_MEMBER, IS_MEMBER
 
-from config import NOT_ACCESS_USER_PERMISSIONS, ACCESS_USER_PERMISSIONS, TG_GROUP_ID, TG_TRADE_GROUP_ID
+from config import NOT_ACCESS_USER_PERMISSIONS, ACCESS_USER_PERMISSIONS, TG_GROUP_ID
 
 from .callback_factorys import CheckUserData
 from .middlewares import NewUserMiddleware
@@ -47,13 +46,6 @@ async def check_user(
         if not cur_user[["Никнейм в телеге", "Имя пользователя через @ (смотри свой профиль)", "Район обитания", "Метро обитания (ближайшее)"]].squeeze().all():
             is_valid = False
             message += "\n- Заполнены все необходимые поля"
-
-    if (chat_member := await bot.get_chat_member(
-        TG_TRADE_GROUP_ID,
-        callback_data.user_id
-    )).status == "left":
-        is_valid = False
-        message += "\n- Вступили в группу барахолку https://t.me/+vIFk7MALMZYxYTVi"
 
     if is_valid:
         await callback.message.edit_text("Вы заполнили таблицу. Доступ открыт!")
@@ -101,8 +93,6 @@ async def invite_user(
     """
     message = (
         f"\n\n1) Заполнить таблицу https://docs.google.com/spreadsheets/d/1jStirZh3ve0CtwyH6GCBpwfXwhlMTmyUBGzFBOikXHY/edit?gid=0&clckid=57df63e4#gid=0."
-        f"\n2) Вступить в группу барахолку https://t.me/+vIFk7MALMZYxYTVi"
-        f"\n\nОбязательно заполни:\n- Никнейм в телеге\n- Имя пользователя через @ (смотри свой профиль)\n- Район обитания\n- Метро обитания (ближайшее)"
 
     )
     await bot.restrict_chat_member(
